@@ -1,0 +1,9 @@
+.contact-page-hero{height:clamp(250px,26vw,350px);min-height:0;aspect-ratio:auto;background:#d9efff}
+.contact-page-hero .services-hero-photo{width:100%;height:100%;right:0;top:0;clip-path:none;background:#d9efff}
+.contact-page-hero .services-hero-photo:after{display:none}
+.contact-page-hero .services-hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 46%;transform:none}
+.contact-page-hero .services-hero-arcs,.contact-page-hero .services-hero-inner{display:none}
+@media(max-width:760px){.contact-page-hero{height:auto;aspect-ratio:2048/768}.contact-page-hero .services-hero-photo img{object-fit:contain;object-position:center}}
+.contact-page-grid .contact-card .footer-contact span{display:block;margin-top:4px;padding:11px 13px;border:1px solid #cde8fa;border-left:3px solid #078be8;border-radius:10px;background:linear-gradient(110deg,#f0f9ff,#e5f4ff);color:#263d60;font-size:12px;font-weight:600;line-height:1.55}
+.contact-page-grid .contact-card .footer-contact a{display:block;width:100%;padding:9px 12px;border:1px solid #d7ebf8;border-radius:9px;background:#f8fcff;color:#263d60;font-size:12px;font-weight:600;text-decoration:none;line-height:1.45}
+.contact-page-grid .contact-card .footer-contact a:hover{border-color:#8dcdf0;background:#edf8ff;color:#0874d1}

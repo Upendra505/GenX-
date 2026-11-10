@@ -1,0 +1,20 @@
+.package-scroll-card .package-top{padding:19px 20px 15px}
+.package-scroll-card .package-icon{display:none}
+.package-cover{height:164px;margin:-19px -20px 12px;overflow:hidden;background:#eaf5fb;border-radius:18px 18px 0 0}
+.package-cover-image{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .3s}
+.package-scroll-card:hover .package-cover-image{transform:scale(1.035)}
+.package-scroll-card .package-type{display:block;min-height:20px;margin:0;padding:0 78px 0 0;font-size:9px}
+.package-scroll-card .package-top h3{font-size:16px;min-height:42px;margin:8px 0 9px;padding-right:20px}
+.package-scroll-card .save-badge{top:183px;right:14px;font-size:8px}
+.package-full-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:20px}
+.package-full-grid .package-cover{height:190px}
+.package-full-grid .package-scroll-card .save-badge{top:209px}
+.package-full-grid .package-scroll-card .package-top h3{min-height:42px}
+.package-full-grid .package-scroll-card .package-body{padding:13px 16px 16px}
+.package-full-grid .package-scroll-card .package-actions{gap:6px}
+.hero-offer-image{float:left;width:58px;height:58px;object-fit:cover;border-radius:10px;margin:0 9px 5px 0;border:1px solid #d7e9f4}
+.hero-offer .offer-label{display:block;min-height:21px;padding-right:45px}
+.hero-offer h3{min-height:34px}
+@media(max-width:1000px){.package-full-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.package-full-grid .package-cover{height:180px}.package-full-grid .package-scroll-card .save-badge{top:199px}}
+@media(max-width:640px){.package-full-grid{grid-template-columns:1fr}.package-full-grid .package-cover{height:210px}.package-full-grid .package-scroll-card .save-badge{top:229px}}
+@media(max-width:520px){.package-cover{height:145px}.package-scroll-card .save-badge{top:164px}.package-full-grid .package-cover{height:200px}.package-full-grid .package-scroll-card .save-badge{top:219px}.hero-offer-image{width:48px;height:48px}.hero-offer .offer-label{padding-right:38px}}

@@ -1,0 +1,11 @@
+html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;color:#202638;background:#fff}h1,h2,h3,h4,.brand-name{font-family:'Manrope',sans-serif;letter-spacing:-.035em}.page-hero{background:linear-gradient(120deg,#f1f8ff 0%,#e8f5ff 100%)}.page-hero h1,.section-head h2,.about-copy h2,.contact-strip h2{color:#211d49}.page-hero h1 em,.section-head h2 em,.about-copy h2 em{color:#087FCB}.page-hero p,.section-head>p,.about-copy>p,.contact-strip p{color:#596579}.service-card h3,.package-card h3,.value-card h3,.contact-card h3{color:#211d49}.service-card,.package-card,.value-card,.contact-card{border-color:#c5e1f2}.service-card:hover,.package-card:hover,.value-card:hover,.contact-card:hover{box-shadow:0 14px 35px rgba(20,95,155,.14)}.package-prices .offer{color:#087FCB}.btn-primary{background:#211D49;color:#fff}.btn-primary:hover{background:#087FCB}.appointment-copy h2,.sample-inner h2,.highlight-main h3{color:#fff}.form-grid input,.form-grid select,.form-grid textarea{font-family:'DM Sans',sans-serif}
+body{font-size:17px}
+p,li{font-size:max(15px,1rem)}
+.btn,button,input,select,textarea{font-size:max(14px,1rem)}
+.eyebrow,.nav-links a,.footer-links a,.footer-contact a,.service-card h3,.service-card p,small{font-size:max(13px,.875rem)}
+@media(max-width:520px){body{font-size:16px}}
+.footer-bottom{flex-wrap:wrap;gap:12px 24px;font-size:14px;line-height:1.6;color:#c4c6d6}
+.footer-bottom .footer-credit{font-size:14px}
+.footer-bottom .footer-credit a{color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.footer-bottom .footer-credit a:hover{color:#8fcef5}
+@media(max-width:800px){.footer-bottom{align-items:flex-start;font-size:14px}.footer-bottom .footer-credit{font-size:14px}}
