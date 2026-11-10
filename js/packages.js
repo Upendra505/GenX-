@@ -27,7 +27,7 @@ const PACKAGE_ART={
 'Antenatal Profile':{src:'https://images.pexels.com/photos/7088826/pexels-photo-7088826.jpeg?auto=compress&cs=tinysrgb&w=1200',fallback:'images/services/ultrasound.jpg',credit:'https://www.pexels.com/photo/people-woman-sitting-technology-7088826/'}
 };
 function packageImage(p,className){const art=PACKAGE_ART[p.name]||{src:'images/services/lab.jpg',fallback:'images/services/lab.jpg',credit:''};return `<img class="${className}" src="${art.src}" alt="${p.name} package image" data-photo-source="${art.credit}" title="${p.name} package image" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${art.fallback}'">`}
-function packageCard(p,i){return `<article class="package-card package-scroll-card"><div class="package-top"><div class="package-cover">${packageImage(p,'package-cover-image')}</div><span class="package-type">${p.type}</span>${p.saving?`<span class="save-badge">SAVE ${p.saving}%</span>`:''}<h3>${p.name}</h3><span class="package-collection">Home sample collection available</span><div class="package-prices">${p.mrp?`<span class="mrp">MRP ₹${p.mrp.toLocaleString('en-IN')}</span>`:''}<span class="offer">₹${p.price.toLocaleString('en-IN')}</span></div></div><div class="package-body"><div class="package-test-count">${p.tests.length} tests included</div><div class="test-preview">${p.tests.slice(0,4).join(' · ')}${p.tests.length>4?' · …':''}</div><button class="test-toggle" type="button" aria-expanded="false">View all ${p.tests.length} tests +</button><ul class="test-list" hidden>${p.tests.map(t=>`<li>${t}</li>`).join('')}</ul><div class="package-actions"><a class="btn btn-outline" href="packages.html?search=${encodeURIComponent(p.name)}">View details</a><a class="btn btn-primary" href="index.html#appointment" data-package="${p.name}">Book package</a></div><a class="package-whatsapp" target="_blank" rel="noopener" href="https://wa.me/919701055516?text=${encodeURIComponent('Hello GENX, I would like to enquire about the '+p.name+' package.')}">WhatsApp enquiry ↗</a></div></article>`}function renderPackages(selector,items=PACKAGES){const el=document.querySelector(selector);if(el)el.innerHTML=items.map(packageCard).join('')}
+function packageCard(p,i){return `<article class="package-card package-scroll-card"><div class="package-top" data-package-details="${i}" role="button" tabindex="0" aria-haspopup="dialog" aria-label="View full details for ${p.name}"><div class="package-cover">${packageImage(p,'package-cover-image')}</div><span class="package-type">${p.type}</span>${p.saving?`<span class="save-badge">SAVE ${p.saving}%</span>`:''}<h3>${p.name}</h3><span class="package-collection">Home sample collection available</span><div class="package-prices">${p.mrp?`<span class="mrp">MRP ₹${p.mrp.toLocaleString('en-IN')}</span>`:''}<span class="offer">₹${p.price.toLocaleString('en-IN')}</span></div></div><div class="package-body"><div class="package-test-count">${p.tests.length} tests included</div><div class="test-preview">${p.tests.slice(0,4).join(' · ')}${p.tests.length>4?' · …':''}</div><button class="test-toggle" type="button" aria-expanded="false">View all ${p.tests.length} tests +</button><ul class="test-list" hidden>${p.tests.map(t=>`<li>${t}</li>`).join('')}</ul><div class="package-actions"><button class="btn btn-outline package-details-trigger" type="button" data-package-details="${i}">View full details <i class="fas fa-arrow-right" aria-hidden="true"></i></button><a class="btn btn-primary" href="index.html#appointment" data-package="${p.name}">Book package</a></div><a class="package-whatsapp" target="_blank" rel="noopener" href="https://wa.me/919701055516?text=${encodeURIComponent('Hello GENX, I would like to enquire about the '+p.name+' package.')}">WhatsApp enquiry ↗</a></div></article>`}function renderPackages(selector,items=PACKAGES){const el=document.querySelector(selector);if(el)el.innerHTML=items.map(packageCard).join('')}
 function renderHeroOffers(){const el=document.querySelector('#hero-offers');if(!el)return;el.innerHTML=PACKAGES.slice(0,6).map(p=>`<article class="hero-offer">${packageImage(p,'hero-offer-image')}<span class="offer-label">${p.type}</span>${p.saving?`<span class="offer-save">SAVE ${p.saving}%</span>`:''}<h3>${p.name}</h3><span class="offer-price">₹${p.price.toLocaleString('en-IN')}</span>${p.mrp?`<span class="offer-mrp">₹${p.mrp.toLocaleString('en-IN')}</span>`:''}</article>`).join('')}
 renderHeroOffers();
 renderPackages('#featured-packages',PACKAGES);renderPackages('#all-packages');
@@ -45,3 +45,40 @@ document.querySelectorAll('[data-blog-scroll]').forEach(button=>button.addEventL
 document.addEventListener('click',e=>{const btn=e.target.closest('.test-toggle');if(!btn)return;const list=btn.nextElementSibling;const show=list.hidden;list.hidden=!show;btn.setAttribute('aria-expanded',String(show));btn.textContent=show?'Hide tests −':`View all ${list.children.length} tests +`});
 document.addEventListener('click',e=>{const a=e.target.closest('[data-package]');if(!a)return;const select=document.querySelector('select[name="package"]');if(select)select.value=a.dataset.package;else sessionStorage.setItem('genx-package',a.dataset.package)});
 document.querySelectorAll('select[name="package"]').forEach(select=>{PACKAGES.forEach(p=>select.add(new Option(`${p.name} — ₹${p.price.toLocaleString('en-IN')}`,p.name)));const chosen=sessionStorage.getItem('genx-package');if(chosen){select.value=chosen;sessionStorage.removeItem('genx-package')}});
+
+function packageDialog(){
+  let dialog=document.querySelector('#package-details-dialog');
+  if(dialog)return dialog;
+  dialog=document.createElement('dialog');
+  dialog.id='package-details-dialog';
+  dialog.className='package-dialog';
+  dialog.setAttribute('aria-labelledby','package-dialog-title');
+  dialog.innerHTML='<div class="package-dialog-panel"><button class="package-dialog-close" type="button" aria-label="Close package details"><i class="fas fa-times" aria-hidden="true"></i></button><div class="package-dialog-content"></div></div>';
+  document.body.append(dialog);
+  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+  dialog.querySelector('.package-dialog-close').addEventListener('click',()=>dialog.close());
+  return dialog;
+}
+document.addEventListener('click',e=>{
+  const trigger=e.target.closest('[data-package-details]');
+  if(!trigger)return;
+  const p=PACKAGES[Number(trigger.dataset.packageDetails)];
+  if(!p)return;
+  const art=PACKAGE_ART[p.name]||{src:'images/services/lab.jpg',fallback:'images/services/lab.jpg'};
+  const dialog=packageDialog();
+  const mrp=p.mrp?'<span class="mrp">MRP ₹'+p.mrp.toLocaleString('en-IN')+'</span>':'';
+  const saving=p.saving?'<span class="package-dialog-saving">Save '+p.saving+'%</span>':'';
+  const tests=p.tests.map(t=>'<li><i class="fas fa-check-circle" aria-hidden="true"></i>'+t+'</li>').join('');
+  const message=encodeURIComponent('Hello GENX, I would like to enquire about the '+p.name+' package.');
+  dialog.querySelector('.package-dialog-content').innerHTML=
+    '<img class="package-dialog-image" src="'+art.src+'" alt="'+p.name+'" onerror="this.onerror=null;this.src=\''+art.fallback+'\'">'+
+    '<div class="package-dialog-copy"><span class="package-type">'+p.type+'</span><h2 id="package-dialog-title">'+p.name+'</h2>'+
+    '<p class="package-dialog-intro">A '+p.type.toLowerCase()+' package with '+p.tests.length+' included diagnostic tests. Home sample collection is available; contact GENX to confirm availability and appointment details.</p>'+
+    '<div class="package-dialog-prices">'+mrp+'<strong>₹'+p.price.toLocaleString('en-IN')+'</strong>'+saving+'</div>'+
+    '<div class="package-dialog-tests-head"><h3>Included tests</h3><span>'+p.tests.length+' tests</span></div><ul class="package-dialog-tests">'+tests+'</ul>'+
+    '<div class="package-dialog-actions"><a class="btn btn-primary" href="index.html#appointment" data-package="'+p.name+'">Book this package <i class="fas fa-arrow-right" aria-hidden="true"></i></a>'+
+    '<a class="btn btn-outline" target="_blank" rel="noopener" href="https://wa.me/919701055516?text='+message+'"><i class="fab fa-whatsapp" aria-hidden="true"></i> Ask on WhatsApp</a></div>'+
+    '<p class="package-dialog-note">Please contact GENX to confirm current pricing, package availability, and any preparation instructions.</p></div>';
+  dialog.showModal();
+});
+document.addEventListener('keydown',e=>{const card=e.target.closest('.package-top[role=button]');if(!card||(e.key!=='Enter'&&e.key!==' '))return;e.preventDefault();card.click()});
